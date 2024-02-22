@@ -7,7 +7,7 @@ import "./App.css";
 export default function App() {
   return (
     <div>
-      <h1>Dogs 🐾</h1>
+      <h1>Dog Posts 🐾</h1>
       <nav>
         <Link to="/">Home</Link>
         <Link to="/dogs">Posts</Link>

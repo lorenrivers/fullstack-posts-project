@@ -22,7 +22,7 @@ export default function PostNewDog() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Dog Name:</label>
+        <label htmlFor="name">Name:</label>
         <input
           type="text"
           id="name"
@@ -30,7 +30,7 @@ export default function PostNewDog() {
           value={formValues.name}
           onChange={handleInputChange}
         />
-        <label htmlFor="age">Dog Age:</label>
+        <label htmlFor="age">Age:</label>
         <input
           type="number"
           id="age"
