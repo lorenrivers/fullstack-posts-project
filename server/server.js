@@ -31,11 +31,11 @@ app.get("/dogs", async (req, res) => {
 //post data to the dogs table
 app.post("/dogs", async (req, res) => {
   try {
-    const { name, age, location } = req.body;
+    const { name, imgURL, age, location } = req.body;
 
     const newPost = await db.query(
-      `INSERT INTO dogs (name, age, location) VALUES ($1, $2, $3) RETURNING *`,
-      [name, age, location]
+      `INSERT INTO dogs (name, imgURL, age, location) VALUES ($1, $2, $3, $4) RETURNING *`,
+      [name, imgURL, age, location]
     );
     res.json(newPost.rows);
   } catch (err) {
@@ -72,7 +72,7 @@ app.post("/categories", async (req, res) => {
 app.get("/dogsAndBreeds", async (req, res) => {
   try {
     const combinedInfo = await db.query(
-      `SELECT dogs.name, dogs.age, dogs.location, dogs.category_id, categories.id, categories.breed
+      `SELECT dogs.name, dogs.imgURL, dogs.age, dogs.location, dogs.category_id, categories.id, categories.breed
             FROM dogs
             JOIN categories ON dogs.category_id = categories.id`
     );

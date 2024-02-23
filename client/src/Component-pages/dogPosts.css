@@ -1,0 +1,26 @@
+.dog-card {
+  border: 1px dashed black;
+  margin: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 5px;
+}
+
+img {
+  height: 250px;
+}
+
+.further-info-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.p-category {
+  font-weight: bolder;
+  color: blueviolet;
+}
+
+.dog-title {
+  font-size: 2.5rem;
+}
