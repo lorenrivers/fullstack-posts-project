@@ -1,0 +1,13 @@
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px;
+  width: 80%;
+}
+
+.submit-button {
+  width: fit-content;
+  padding: 5px;
+  align-self: center;
+}

@@ -1,26 +1,36 @@
 import { Route, Routes, Link } from "react-router-dom";
-import Home from "./Component-pages/Home";
-// import DogPosts from "./Component-pages/DogPosts";
-// import PostNewDog from "./Component-pages/PostNewDog";
+import Home from "./Components/Home";
 import "./App.css";
 import { useEffect, useState } from "react";
-import "./Component-pages/dogPosts.css";
+import "./Components/dogPosts.css";
+import "./Components/upload.css";
 
 export default function App() {
   const [posts, setPosts] = useState([]);
   const [form, setForm] = useState({});
+  const [category, setCategory] = useState([]);
 
   useEffect(() => {
     fetchDogs();
+    fetchCategory();
   }, []);
 
+  //display dog info from database with category
   async function fetchDogs() {
-    const data = await fetch("http://localhost:4444/dogsAndBreeds");
-    const newData = await data.json();
+    let data = await fetch("http://localhost:4444/dogsAndBreeds");
+    let newData = await data.json();
     console.log(newData);
     setPosts(newData);
   }
 
+  //display category data from database for user to select in the dropdown
+  async function fetchCategory() {
+    let data = await fetch("http://localhost:4444/categories");
+    let newData = await data.json();
+    setCategory(newData);
+  }
+
+  //post user inputted info upon submit (fetchdogs doesn't reload image at the moment)
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -37,6 +47,7 @@ export default function App() {
     }
   }
 
+  //capture user input as it happens
   function handleInputChange(event) {
     setForm({
       ...form,
@@ -48,32 +59,43 @@ export default function App() {
     <div>
       <h1>Dog Posts 🐾</h1>
       <nav>
-        <Link to="/">Home</Link>
-        <Link to="/dogs">Posts</Link>
-        <Link to="/upload">Post a Dog</Link>
+        <Link className="nav-link" to="/">
+          Home
+        </Link>
+        <Link className="nav-link" to="/dogs">
+          Posts
+        </Link>
+        <Link className="nav-link" to="/upload">
+          Post a Dog
+        </Link>
       </nav>
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
           path="/dogs"
-          element={posts.map((post) => (
-            <div key={post.id} className="dog-card">
-              <h2 className="dog-title">{post.name}</h2>
-              <img src={post.imgurl} />
-              <div className="further-info-text">
-                <p className="p-age">Age: {post.age}</p>
-                <p className="p-location">{post.location}</p>
-                <p className="p-category">{post.breed}</p>
-              </div>
+          element={
+            <div className="posts-container">
+              {posts.map((post) => (
+                <div key={post.id} className="dog-card">
+                  <h2 className="dog-title">{post.name}</h2>
+                  <img src={post.imgurl} />
+                  <div className="further-info-text">
+                    <p className="p-age">Age: {post.age}</p>
+                    <p className="p-location">{post.location}</p>
+                    <p className="p-category">{post.breed}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          }
         />
         <Route
           path="/upload"
           element={
             <div>
               <h2>Upload Your Dog!</h2>
-              <form onSubmit={handleSubmit}>
+              <form className="form-container" onSubmit={handleSubmit}>
                 <label htmlFor="name">Name:</label>
                 <input
                   type="text"
@@ -107,19 +129,22 @@ export default function App() {
                   onChange={handleInputChange}
                 />
                 <label htmlFor="breed">Breed:</label>
-                {/* <select name="breed" id="breed">
-                  {breed.map((breed) => (
-                    <option key={breed.id} value="category">
-                      {breed.breed}
+                <select name="breed" id="breed">
+                  {category.map((category) => (
+                    <option key={category.id} value="category">
+                      {category.breed}
                     </option>
                   ))}
-                </select> */}
-                <button type="submit">Submit</button>
+                </select>
+                <button className="submit-button" type="submit">
+                  Submit
+                </button>
               </form>
             </div>
           }
         />
       </Routes>
+      <footer>© Dogs Inc. 2024.</footer>
     </div>
   );
 }

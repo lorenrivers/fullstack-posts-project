@@ -74,7 +74,7 @@ app.get("/dogsAndBreeds", async (req, res) => {
     const combinedInfo = await db.query(
       `SELECT dogs.name, dogs.imgURL, dogs.age, dogs.location, dogs.category_id, categories.id, categories.breed
             FROM dogs
-            JOIN categories ON dogs.category_id = categories.id`
+            LEFT JOIN categories ON dogs.category_id = categories.id`
     );
     res.json(combinedInfo.rows);
   } catch (err) {
