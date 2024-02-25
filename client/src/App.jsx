@@ -30,7 +30,7 @@ export default function App() {
     setCategory(newData);
   }
 
-  //post user inputted info upon submit (fetchdogs doesn't reload image at the moment)
+  //post user inputted info upon submit
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -131,7 +131,11 @@ export default function App() {
                 <label htmlFor="breed">Breed:</label>
                 <select name="breed" id="breed">
                   {category.map((category) => (
-                    <option key={category.id} value="category">
+                    <option
+                      key={category.id}
+                      value="category"
+                      onChange={handleInputChange}
+                    >
                       {category.breed}
                     </option>
                   ))}

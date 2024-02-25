@@ -53,16 +53,17 @@ app.get("/categories", async (req, res) => {
   }
 });
 
-//post data to the categories table
+//post categories data to the dogs table
 app.post("/categories", async (req, res) => {
   try {
     const { breed } = req.body;
 
-    const newBreed = await db.query(
-      `INSERT INTO categories (breed) VALUES ($1) RETURNING *`,
+    const addBreed = await db.query(
+      `SELECT categories.id FROM categories WHERE categories.breed = ($1)
+      INSERT INTO dogs (category_id) VALUES (id)`,
       [breed]
     );
-    res.json(newBreed.rows);
+    res.json(addBreed.rows);
   } catch (err) {
     res.status(500).json(err);
   }

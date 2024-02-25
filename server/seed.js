@@ -25,11 +25,12 @@ export const db = new pg.Pool({
 // //create categories table
 db.query(`CREATE TABLE IF NOT EXISTS categories (
     id SERIAL PRIMARY KEY,
-    breed VARCHAR(255) NOT NULL
+    breed VARCHAR(255) NOT NULL,
+    dogIdConnectedTo INT
 )`);
 
 // // //seed categories table with initial data
-db.query(`INSERT INTO categories (breed)
+db.query(`INSERT INTO categories (breed, dogIdConnectedTo)
 VALUES
 ('Akita'),
 ('Mixed Breed'),
